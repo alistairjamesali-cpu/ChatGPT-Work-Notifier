@@ -1,0 +1,358 @@
+{
+  "schema": 1,
+  "release": "2.4.0",
+  "generated": "2026-09-03",
+  "defects": [
+    {
+      "id": "D001",
+      "severity": "CRITICAL",
+      "defect": "Loopback browser heartbeat/event endpoints accepted spoofable browser signals without session authentication.",
+      "root_cause": "Loopback origin was treated as sufficient trust; no per-managed-session credential protected browser-originated health/event writes.",
+      "repair": "Added per-session 32-hex token validation, X-CWN-Token, Chrome-extension Origin requirement, constant-work token comparison, /validate-session, and protected browser write/command endpoints.",
+      "retest": "service-worker-multitab.test.js + security-hardening-v230.py; Windows adversarial confirmation scripted in tests/SECURITY_WINDOWS_RUNTIME.ps1.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D002",
+      "severity": "HIGH",
+      "defect": "REGISTER_MANAGED_WINDOW could accept an attacker-chosen well-formed token before proving it belonged to the tray-created session.",
+      "root_cause": "Registration mutated extension state before independent bridge validation.",
+      "repair": "Registration now validates the token against /validate-session before managedWindowId/managedSessionToken are committed.",
+      "retest": "Untrusted well-formed token rejection added to service-worker-multitab.test.js.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D003",
+      "severity": "HIGH",
+      "defect": "Managed session secret appeared in Chrome launch URL logs and bridge PowerShell process arguments.",
+      "root_cause": "Diagnostic logging captured launch arguments; bridge accepted token directly on command line.",
+      "repair": "Token is redacted from logs, removed from ChatGPT URL after document_start bootstrap, and bridge reads it from a LocalAppData token file rather than the process command line.",
+      "retest": "security-hardening-v230.py verifies URL cleanup, no token log path, and SessionTokenFile launch.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D004",
+      "severity": "CRITICAL",
+      "defect": "Persisted HWND was trusted if IsWindow was true; Windows handle reuse could make restart/uninstall target an unrelated window.",
+      "root_cause": "Handle existence was checked without validating Chrome class/process ownership.",
+      "repair": "Added Chrome top-level class/process ownership verification before restoring, using, closing, or uninstalling a persisted HWND.",
+      "retest": "security-hardening-v230.py; Windows confirmation in VERIFY_RUNTIME.ps1.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D005",
+      "severity": "HIGH",
+      "defect": "Chrome/PowerShell/WSH and some diagnostic utilities could resolve through PATH/generic executable names.",
+      "root_cause": "Convenience executable discovery allowed search-order ambiguity.",
+      "repair": "Runtime launch paths now resolve explicit Windows/System32 or known Chrome installation paths; PATH fallback removed from live Chrome discovery.",
+      "retest": "security-hardening-v230.py scans production and validation launch paths.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D006",
+      "severity": "HIGH",
+      "defect": "PowerShell [bool] casts could interpret the JSON string 'false' as true.",
+      "root_cause": "Configuration values were coerced rather than type-validated.",
+      "repair": "Only actual JSON booleans are accepted; malformed types retain safe defaults and are logged by the tray.",
+      "retest": "security-hardening-v230.py checks strict boolean type gates.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D007",
+      "severity": "HIGH",
+      "defect": "Managed/settings/runtime JSON state was written directly and could be left partially written on interruption.",
+      "root_cause": "Non-transactional persistent writes.",
+      "repair": "Added temp-write + atomic replace/move for critical JSON persistence.",
+      "retest": "security-hardening-v230.py checks all critical state writers use Write-JsonAtomic; Windows interruption test remains scripted for Codex.",
+      "status": "REPAIRED_ATOMIC_STRESS_PASS_EXACT_INTERRUPT_PENDING"
+    },
+    {
+      "id": "D008",
+      "severity": "HIGH",
+      "defect": "Concurrent creation of another Chrome window during managed launch could capture the wrong new HWND.",
+      "root_cause": "First-difference window selection assumed only one new Chrome top-level window.",
+      "repair": "Capture accumulates candidate HWNDs and refuses ownership if multiple new Chrome windows appear concurrently.",
+      "retest": "security-hardening-v230.py confirms fail-closed branch; Windows concurrency reproduction remains Codex gate.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D009",
+      "severity": "HIGH",
+      "defect": "Upgrade/uninstall process cleanup could match unrelated PowerShell jobs by script filename.",
+      "root_cause": "Process ownership filter was name-based rather than release-root scoped.",
+      "repair": "Live tray/bridge process termination now requires the exact release root in the command line; legacy watcher matching remains migration-only.",
+      "retest": "security-hardening-v230.py checks root-scoped filters.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D010",
+      "severity": "MEDIUM",
+      "defect": "Malformed browser-tab-closed JSON could be swallowed and still receive success.",
+      "root_cause": "Parse failure was ignored on a state-changing endpoint.",
+      "repair": "Malformed payload now returns HTTP 400; false-success path removed.",
+      "retest": "security-hardening-v230.py checks explicit Bad Request path.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D011",
+      "severity": "MEDIUM",
+      "defect": "Unauthenticated /state exposed tab URL/conversation metadata through tab records/last event.",
+      "root_cause": "Public local-health representation reused internal browser event data.",
+      "repair": "Public bridge state now omits tab URL, conversationId, title and equivalent last-event metadata while retaining operational health fields.",
+      "retest": "security-hardening-v230.py plus SECURITY_WINDOWS_RUNTIME.ps1 public-state assertions.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D012",
+      "severity": "MEDIUM",
+      "defect": "Diagnostics source assumed the protected browser-event endpoint was unauthenticated.",
+      "root_cause": "Runtime diagnostics did not evolve with the hardened IPC contract.",
+      "repair": "Diagnostics/VERIFY_RUNTIME now retrieve the managed token and send the required Origin/X-CWN-Token headers.",
+      "retest": "security-hardening-v230.py verifies both validation scripts exercise authenticated writes.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D013",
+      "severity": "HIGH",
+      "defect": "Local repair/focus/diagnostic control endpoints were state-changing but did not require authentication.",
+      "root_cause": "Loopback-local control actions were implicitly trusted.",
+      "repair": "Added token-only local control authentication for /request-tab-focus, /request-repair and /diagnostic-ping; tray and runtime validators now sign those requests.",
+      "retest": "security-hardening-v230.py 37/37; SECURITY_WINDOWS_RUNTIME.ps1 includes no-token/wrong-token control rejection attacks.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D014",
+      "severity": "HIGH",
+      "defect": "A failed bridge notification delivery could permanently consume the same-state alert, and the bridge exposed only one overwriteable popup event.",
+      "root_cause": "Notification delivery was committed before bridge acceptance and the tray polled a single lastEvent slot.",
+      "repair": "Commit notification state only after bridge acceptance; retain bounded sequenced popup events and consume each sequence once.",
+      "retest": "service-worker-multitab retry regression, static lossless-queue gate, and live hidden UNCERTAIN-to-COMPLETE delivery.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D015",
+      "severity": "HIGH",
+      "defect": "Open-popup click handlers referenced expired function-local variables, so a manual popup could close and exact-tab routing could degrade to merely showing Chrome.",
+      "root_cause": "Delayed WinForms callbacks did not read the authoritative live popup event.",
+      "repair": "Open and Dismiss handlers now derive target/manual state from script:PopupEvent at click time.",
+      "retest": "Request regression, 260-point static audit, exact left-to-right live tab activation, and Win32 visible/TopMost persistence probe.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D016",
+      "severity": "HIGH",
+      "defect": "A ChatGPT tab navigated elsewhere while the extension was disabled could remain counted and unprotected after re-enable.",
+      "root_cause": "Recovery scan added current ChatGPT tabs but did not prune stored records missing from the current eligible set or notify the bridge.",
+      "repair": "Recovery scan now removes ineligible records and posts authenticated managed-scan-prune lifecycle cleanup to the bridge.",
+      "retest": "Deterministic missed-navigation regression plus live 3-to-2 tab-count correction with both remaining tabs protected.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D017",
+      "severity": "HIGH",
+      "defect": "Direct managed-window loss recreated Chrome even while a managed tab reported RUNNING.",
+      "root_cause": "The loss branch bypassed the RUNNING guard used by automatic restart.",
+      "repair": "Managed-window recreation now stays DEGRADED and logs suppression while bridge state contains RUNNING work.",
+      "retest": "Static/material assertions and live controlled RUNNING loss with two suppressed cycles, no replacement, and ordinary Chrome preserved.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "D018",
+      "severity": "MEDIUM",
+      "defect": "Advanced Logger repeatedly faulted after the public bridge schema was privacy-redacted; integrity verification also failed under its clean hidden PowerShell host and hit a Windows PowerShell 5.1 list-conversion error.",
+      "root_cause": "The logger accessed removed URL/conversation fields under StrictMode, relied on an unavailable auto-loaded Get-FileHash cmdlet, treated an empty Windows event query as a logger fault, and used array-subexpression conversion on a generic list.",
+      "repair": "Logger 1.1.1 consumes only public operational fields, hashes through the .NET SHA-256 API, ignores the expected NoMatchingEventsFound condition, and converts the generic integrity list through ToArray().",
+      "retest": "Static public-schema compatibility assertion, PowerShell parser gate, and restarted live logger with no new recorder errors.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-01",
+      "severity": "HIGH",
+      "defect": "Windows dashboard progress UI was missing.",
+      "root_cause": "The native dashboard exposed reliability rows but had no selected-task presentation surface.",
+      "repair": "Added a prominent CURRENT CHATGPT TASK panel with title, state, large percentage, white/blue custom track/fill, freshness, and explicit unknown-progress wording.",
+      "retest": "v240-repair-regression 103/103, expanded static audit, material audit, and Windows PowerShell parser gate.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-02",
+      "severity": "HIGH",
+      "defect": "Native bridge per-tab progress/freshness/completion proof was missing.",
+      "root_cause": "Bridge tab records retained status and heartbeat metadata but not the current progress contract.",
+      "repair": "Added title, progress, updatedAt, and safeCompletion to internal records; exposed privacy-safe fields publicly and sanitized title only through authenticated dashboard state.",
+      "retest": "Isolated live bridge HTTP contract verifies schema, authentication, privacy omissions, proof gating, and boundary values.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-03",
+      "severity": "HIGH",
+      "defect": "Heartbeat transport did not forward title, progress, completion proof, or message identity to the bridge.",
+      "root_cause": "The previous heartbeat payload carried status and routing metadata only.",
+      "repair": "Content and service-worker heartbeat paths now forward/store the full safe operational tuple and downgrade unsafe COMPLETE claims.",
+      "retest": "service-worker-multitab asserts transport fields, proof reset, unsafe downgrade, and progress-only no-event/no-notification behavior.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-04",
+      "severity": "MEDIUM",
+      "defect": "Tray did not continuously expose the selected task percentage.",
+      "root_cause": "The context menu and NotifyIcon tooltip had only static product controls/text.",
+      "repair": "Added a disabled first status item and dynamic bounded tooltip driven by the same selected task as the dashboard.",
+      "retest": "v2.4.0 contract/static tests verify known, unknown, no-task, and 63-character tooltip paths.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-05",
+      "severity": "MEDIUM",
+      "defect": "The in-page progress UI was mainly a text overlay.",
+      "root_cause": "The existing cwn-progress-monitor rendered one textContent string without structured visual progress.",
+      "repair": "Upgraded the same bottom-right monitor to structured head/state/value, track/fill, and note elements with known and indeterminate rendering.",
+      "retest": "request regression and v2.4.0 matrix assert the actual DOM contract, bottom-right position, noninteractive behavior, and safe completion gate.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-06",
+      "severity": "MEDIUM",
+      "defect": "Documentation overstated the completeness of the percentage UI.",
+      "root_cause": "Earlier documentation referred to progress UI before a native dashboard/tray surface existed.",
+      "repair": "Updated active README, architecture, security, invariants, traceability, manual validation, evidence index, and changelog to describe the implemented v2.4.0 surfaces exactly.",
+      "retest": "Documentation/identity omission sweep and expanded static/material audits.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-07",
+      "severity": "HIGH",
+      "defect": "Progress freshness and multi-tab native selection lacked an explicit deterministic contract.",
+      "root_cause": "Native UI had no reusable selector and could not rank task urgency/freshness consistently.",
+      "repair": "Added one Select-CurrentTask helper: manual-action states, then RUNNING, then other managed state; newest updatedAt and highest tabId break ties; detached/closed/pruned records are ineligible.",
+      "retest": "TRAY_SELECTION_TEST executes the real function for manual priority, rank, freshness, tie, exclusion, and empty-state cases.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-08",
+      "severity": "MEDIUM",
+      "defect": "The native dashboard showed percentage for only the selected current task rather than every open managed ChatGPT tab.",
+      "root_cause": "The first v2.4.0 dashboard surface had a single-task summary and no lifecycle-aware collection of per-tab progress rows.",
+      "repair": "Added a flexible scrollable ALL MANAGED CHATGPT TABS panel with one cached white/blue row per eligible tab, independent percentage/bar/freshness updates, deterministic numeric tab ordering, and lifecycle removal.",
+      "retest": "TRAY_PROGRESS_PRESENTATION_TEST executes the actual WinForms functions across 14 scenarios including known/unknown progress, completion proof, dynamic removal, and 10-tab scrolling; request/static/material gates also pass.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-09",
+      "severity": "HIGH",
+      "defect": "INSTALL_OR_UPGRADE.bat appeared to crash and could leave the newly launched dashboard unable to start.",
+      "root_cause": "A verified v2.3.0 runtime in a different folder retained the product-wide mutex because upgrade cleanup matched only the current root. The batch file also used timeout with redirected input, which emitted a misleading console error in noninteractive execution.",
+      "repair": "The installer now extracts the exact runtime script path and stops another root only after validating the expected manifest identity and complete notifier file layout. The final delay uses Windows PowerShell Start-Sleep without redirected input.",
+      "retest": "INSTALL_MIGRATION_TEST passes five positive/negative identity cases; security audit passes 41/41; static audit passes 296/296; an actual installer run exited 0 with no console error and opened a responding v2.4.0 dashboard with its v2.4.0 bridge.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-10",
+      "severity": "MEDIUM",
+      "defect": "The per-tab progress column displayed a garbled three-character sequence instead of the intended no-value marker.",
+      "root_cause": "Windows PowerShell 5.1 decoded Unicode punctuation in the UTF-8-without-BOM tray script through the active legacy code page.",
+      "repair": "All dashboard and tray UI punctuation is now ASCII-safe; unavailable non-running progress renders as N/A, and compact separators use a vertical bar.",
+      "retest": "The actual WinForms presentation test asserts N/A for unsafe completion, the static audit enforces an ASCII-only tray host, and the complete Windows PowerShell 5.1 parser gate passes.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-11",
+      "severity": "MEDIUM",
+      "defect": "The detailed Background Reliability grid cluttered the primary task dashboard.",
+      "root_cause": "Task progress, settings, actions, and all twelve health rows shared one vertically scrolling surface.",
+      "repair": "Added a tabbed WinForms shell. Tasks is the explicit default progress page, Controls owns settings/actions, and the complete health grid is parented to Reliability and remains live.",
+      "retest": "The actual WinForms shell test verifies three tabs, Tasks default selection, and separate Controls/Reliability access; static and material audits verify each control parent boundary.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-12",
+      "severity": "MEDIUM",
+      "defect": "The dashboard remained too large for the marked working region and its existing Hide to tray wording referred to Chrome rather than the dashboard itself.",
+      "root_cause": "The form and progress rows retained wide 1080-pixel geometry, settings/actions occupied the task page, and no dedicated dashboard-hide control existed.",
+      "repair": "Compacted the form to 860x700 with fitted progress/reliability geometry, moved settings/actions to Controls, added a dedicated Hide UI to tray action, and renamed the old action Hide Chrome.",
+      "retest": "The actual WinForms suite passes 20 layout/visibility/progress scenarios, including a real shown-form hide assertion; static audit passes 312/312 and material audit verifies the compact tab/control boundaries.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-13",
+      "severity": "LOW",
+      "defect": "Show Chrome and Hide Chrome were placed on Controls instead of the marked bottom area of the primary Tasks page.",
+      "root_cause": "All quick-action buttons shared one actions panel before the preferred primary-task placement was specified.",
+      "repair": "Reparented the two managed-Chrome visibility buttons to fixed bottom positions on Tasks and compacted the remaining secondary Controls actions upward.",
+      "retest": "The actual WinForms suite verifies the Chrome buttons have Tasks as parent at the requested bottom row; static audit passes 312/312 and live UI inspection confirms they are visible on Tasks.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-14",
+      "severity": "LOW",
+      "defect": "Hide UI to tray remained in the header instead of the marked space beside the Tasks visibility controls.",
+      "root_cause": "The dashboard-hide action was created before the Tasks controls and retained its initial header parent.",
+      "repair": "Extended the Tasks visibility-row placement function to reparent Hide UI to tray and align it immediately after Show Chrome and Hide Chrome.",
+      "retest": "The actual WinForms test verifies all three controls share Tasks and y=462, with the UI-hide control at x=297; static/material audits and live UI inspection confirm the final placement.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-15",
+      "severity": "HIGH",
+      "defect": "The dashboard showed percentage unavailable while the active ChatGPT response visibly contained 65% complete.",
+      "root_cause": "The detector selected the last assistant-role node globally and then discarded it when that auxiliary or hidden node was outside the latest assistant turn, leaving active assistant text empty.",
+      "repair": "Assistant content is now selected from within the latest active assistant turn, with the global assistant node used only to locate a fallback turn when required.",
+      "retest": "Request regression executes the actual assistantForTurn and assistantTextForTurn helpers against active-turn child and container text; the v2.4.0 matrix passes 123 checks, static audit passes 312/312, and the material audit requires active-turn progress binding.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-16",
+      "severity": "MEDIUM",
+      "defect": "A monitored tab could display a generic or stale browser title instead of the current conversation name shown in ChatGPT's sidebar.",
+      "root_cause": "Title transport relied on document.title and periodic worker scans could overwrite a content-derived title with chrome.tabs metadata.",
+      "repair": "The content script now selects the sidebar conversation link whose canonical path matches the current URL and uses its visible title, with document.title only as fallback. Worker scans preserve the content-derived title.",
+      "retest": "Request regression executes the title helper against current, other, and main-content-decoy links; the 123-check v2.4.0 matrix and 312-check static audit enforce binding and scan preservation.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-17",
+      "severity": "HIGH",
+      "defect": "A finalized answer was falsely classified PAUSED and pre-filled Resume because it advised that program code still needed to consume a field.",
+      "root_cause": "Over-broad incomplete-language patterns treated subject-matter advice as the assistant reporting that its own task was unfinished, while the finalized response action row was not used as completion evidence.",
+      "repair": "Incomplete-language rules are now scoped to explicit assistant task/work status. The current turn's finalized response action row supplies stable completion proof, without overriding partial progress, Continue-generating, timeout, waiting-input, or direct task-incomplete evidence. A recovered heartbeat also clears stale manual attention.",
+      "retest": "The exact advisory wording is covered as COMPLETE with no Resume eligibility; explicit task-incomplete wording and 65% partial progress remain PAUSED. The v2.4.0 matrix passes 123 checks, static audit passes 312/312, and the material audit includes finalized-response proof.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-18",
+      "severity": "MEDIUM",
+      "defect": "Eight similarly prominent BAT files in the program root made normal startup ambiguous and allowed accidental selection of install/upgrade.",
+      "root_cause": "User startup, install, uninstall, validation, logger control, diagnostic packaging, and notifier-only launch wrappers were all exposed at the same root level.",
+      "repair": "The root now contains only START_CHATGPT_WORK_NOTIFIER.bat. It starts and verifies Advanced Logger before launching the notifier. All specialist wrappers were preserved under Maintenance with root-relative paths updated; installer identity validation recognizes the new sole launcher.",
+      "retest": "The relocated complete Windows source gate passes. The 123-check v2.4.0 matrix, 312-check static audit, and 100-point material audit enforce exactly one root BAT, Advanced Logger startup, maintenance isolation, and working relocated paths.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-19",
+      "severity": "HIGH",
+      "defect": "The dashboard showed percentage unavailable while the current ChatGPT turn visibly displayed 30% complete.",
+      "root_cause": "ChatGPT rendered streaming commentary in the assistant turn container as a sibling outside the final data-message-author-role assistant child. Progress parsing read only that child, which was empty at this stage.",
+      "repair": "The full latest assistant turn is now the authoritative text scope for progress and state parsing, with the scoped assistant child retained as fallback. Existing task-progress-shape filters still reject unrelated percentages.",
+      "retest": "Request regression executes assistantTextForTurn with visible 30% turn text and an empty assistant child, plus the child-only fallback. The 123-check v2.4.0 matrix, 312-check static audit, and 100-point material audit pass.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-20",
+      "severity": "HIGH",
+      "defect": "A normally finished work response produced a Verify manually popup, while recoverable stale and connection states also asked the user to repair monitoring.",
+      "root_cause": "The state engine required semantic completion wording for work-like prompts and converted an otherwise stable ended response to UNCERTAIN. The content script, service worker, and tray also classified recoverable infrastructure states as persistent manual-action incidents.",
+      "repair": "An observed assistant response now becomes proof-backed COMPLETE after eight stable seconds when all explicit active, paused, waiting, timeout, failure, and incomplete blockers are absent. Persistent alerts are restricted to PAUSED, STUCK_THINKING, WAITING_INPUT, and FAILED; timeout, stale, connection, recovery, and internal unsafe-state telemetry remains quiet while automatic recovery and Advanced Logger continue.",
+      "retest": "State-engine and request regressions cover stable ended work completion and the settling window. Service-worker regression proves PAGE_STALE creates neither manual attention nor a desktop notification. The 123-check v2.4.0 matrix, 312-check static audit, and 100-point material audit enforce the seamless policy.",
+      "status": "REPAIRED_PASS"
+    },
+    {
+      "id": "O-21",
+      "severity": "HIGH",
+      "defect": "A finished answer could later create a false PAUSED/Resume incident, and visible line-leading progress could remain N/A in the native UI.",
+      "root_cause": "Semantic incomplete and partial-progress checks ran before the historical-DOM guard, so they remained actionable after generationObserved reset. Continue detection was document-wide. During page hydration, the historical user turn could also appear before its answer and falsely set generationObserved. Active-turn text normalization removed line boundaries needed by the line-leading percentage grammar.",
+      "repair": "Incomplete, partial-progress, and Continue-generating pause evidence now requires an observed current run and eight stable seconds; historical text stays IDLE, Continue-generating is scoped to the current assistant turn, and startup/terminal user-message signatures reject historical hydration as a new submission. Structured active-turn text preserves line boundaries for percentage parsing.",
+      "retest": "State-engine and request suites cover historical incomplete text, historical 65% text, restored Continue controls, user-signature startup binding, the eight-second pause threshold, current-turn Continue scope, and preserved 30% line-leading progress. The 123-check matrix and 312-check static audit pass; closed-loop live acceptance is required before final closure.",
+      "status": "REPAIRED_PENDING_LIVE"
+    }
+  ]
+}

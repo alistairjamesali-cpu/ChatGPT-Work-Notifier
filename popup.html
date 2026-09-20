@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ChatGPT Work Notifier</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header class="head">
+      <div class="brand">
+        <img src="icons/icon48.png" alt="">
+        <div>
+          <h1>Work Notifier</h1>
+          <p>Managed Chrome only - v2.4.0</p>
+        </div>
+      </div>
+      <label class="switch" title="Enable extension notifications"><input id="enabled" type="checkbox"><span></span></label>
+    </header>
+
+    <section class="status">
+      <div class="eyebrow">LIVE STATUS</div>
+      <div class="status-line"><span class="status-dot"></span><strong id="currentStatus">Ready</strong></div>
+      <div id="currentTitle" class="muted">Open ChatGPT in the managed Chrome window.</div>
+      <div class="progress-head"><span>Progress</span><strong id="currentProgress">—</strong></div>
+      <div class="progress-track"><div id="progressFill"></div></div>
+      <div class="reliability-mini">
+        <div><span>Browser bridge</span><strong id="bridgeStatus">Checking...</strong></div>
+        <div><span>Extension heartbeat</span><strong id="heartbeatStatus">Checking...</strong></div>
+        <div><span>Monitored tabs</span><strong id="tabStatus">0</strong></div>
+        <div><span>Memory Saver</span><strong id="memoryStatus">Checking...</strong></div>
+      </div>
+      <div class="pill">PRIMARY ALERT: PROGRAM POPUP</div>
+    </section>
+
+    <section>
+      <h2>Notifications</h2>
+      <label class="check"><input id="autoResume" type="checkbox"> Autopilot: automatically resume paused work</label>
+      <div class="safety-note">Drafts and requests for your input are preserved.</div>
+      <label class="field"><span>Detection</span><select id="mode"><option value="work">Work tasks only</option><option value="all">Every ChatGPT reply</option></select></label>
+      <label class="check"><input id="onlyWhenUnfocused" type="checkbox"> Alert only when ChatGPT is not focused</label>
+      <label class="check"><input id="notifyComplete" type="checkbox"> Completed</label>
+      <div class="safety-note"><strong>Manual-action safety alerts are always on while monitoring is enabled.</strong><br>Includes needs input, paused, stuck Thinking, and errors. Autopilot attempts eligible pauses; connection and timeout recovery run automatically.</div>
+      <label class="check"><input id="notifyRecovered" type="checkbox"> Monitoring recovered</label>
+      <label class="field"><span>Long-task threshold</span><div class="inline"><input id="minRunSeconds" type="number" min="1" max="600"><span>sec</span></div></label>
+    </section>
+
+    <div class="actions">
+      <button id="test">Test popup</button>
+      <button id="clear" class="secondary">Clear history</button>
+    </div>
+
+    <section>
+      <h2>Recent activity</h2>
+      <div id="history" class="history"></div>
+    </section>
+
+    <footer>127.0.0.1:38765 only - no prompt or response text forwarded</footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

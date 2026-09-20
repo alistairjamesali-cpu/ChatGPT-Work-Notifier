@@ -1,0 +1,14 @@
+{
+  "name": "chatgpt-work-notifier",
+  "version": "2.4.0",
+  "private": true,
+  "description": "Windows + Chrome notifier for long-running ChatGPT work.",
+  "scripts": {
+    "test": "node installer/run-node-tests.js",
+    "audit": "python tests/static-audit.py && python tests/final-100-audit.py",
+    "check": "npm run test && npm run audit"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

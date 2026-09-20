@@ -1,0 +1,145 @@
+{
+    "version":  "2.3.0",
+    "generatedAt":  "2026-09-04T00:49:24.4907040Z",
+    "pass":  true,
+    "checks":  [
+                   {
+                       "name":  "Windows PowerShell 5.1 parsing",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Zero parser errors."
+                   },
+                   {
+                       "name":  "Chrome detected",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+                   },
+                   {
+                       "name":  "Single tray host",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Detected 1 tray-host process(es)."
+                   },
+                   {
+                       "name":  "Single browser bridge",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Detected 1 browser-bridge process(es)."
+                   },
+                   {
+                       "name":  "Managed state file",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "C:\\Users\\Gi_Ma\\AppData\\Local\\ChatGPT Work Notifier\\managed-window.json"
+                   },
+                   {
+                       "name":  "Runtime state file",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "C:\\Users\\Gi_Ma\\AppData\\Local\\ChatGPT Work Notifier\\runtime-state.json"
+                   },
+                   {
+                       "name":  "Managed Chrome window process",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "PID 32320; captured managed window is owned by Chrome."
+                   },
+                   {
+                       "name":  "Original Chrome profile",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Using existing Chrome profile Default."
+                   },
+                   {
+                       "name":  "Dangerous switches absent",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "No prohibited security-bypass switches detected."
+                   },
+                   {
+                       "name":  "No obsolete command-line extension loader",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Chrome 137+ no longer supports --load-extension in branded Chrome."
+                   },
+                   {
+                       "name":  "Browser bridge online",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Version 2.3.0, mode CHROME_ONLY."
+                   },
+                   {
+                       "name":  "Bridge localhost-only",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Port 38765 must have no non-loopback listener."
+                   },
+                   {
+                       "name":  "Managed ChatGPT tab detection",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "1 tracked ChatGPT tab(s)."
+                   },
+                   {
+                       "name":  "Extension heartbeat",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Last heartbeat 8.2s ago."
+                   },
+                   {
+                       "name":  "Memory Saver per-tab protection",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Every tracked ChatGPT tab must report autoDiscardable=false."
+                   },
+                   {
+                       "name":  "Background event round trip",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Local status metadata reached the bridge."
+                   },
+                   {
+                       "name":  "Extension command/routing channel",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "DIAGNOSTIC_PING must be acknowledged through the elected extension leader."
+                   },
+                   {
+                       "name":  "Original profile preserved",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "No copied or isolated Chrome user-data directory is used."
+                   },
+                   {
+                       "name":  "Windows awake protection",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "SetThreadExecutionState system-required protection is active."
+                   },
+                   {
+                       "name":  "Display awake default",
+                       "status":  "PASS",
+                       "required":  false,
+                       "detail":  "Default is OFF; display may turn off while the system remains awake."
+                   },
+                   {
+                       "name":  "Automatic recovery configured",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Recovery state: HEALTHY"
+                   },
+                   {
+                       "name":  "Managed window state available",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "Managed Chrome is visible and alive."
+                   },
+                   {
+                       "name":  "Removed legacy watcher absent",
+                       "status":  "PASS",
+                       "required":  true,
+                       "detail":  "No obsolete native-app watcher process may be running."
+                   }
+               ]
+}

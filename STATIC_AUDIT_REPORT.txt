@@ -1,0 +1,259 @@
+PASS: required:LAUNCH_CHATGPT_NOTIFIER.bat
+PASS: required:INSTALL_OR_UPGRADE.bat
+PASS: required:UNINSTALL.bat
+PASS: required:runtime/launch-hidden.vbs
+PASS: required:runtime/tray-host.ps1
+PASS: required:runtime/browser-bridge.ps1
+PASS: required:runtime/diagnostics.ps1
+PASS: required:runtime/chrome-launch.json
+PASS: required:runtime/install.ps1
+PASS: required:runtime/uninstall.ps1
+PASS: required:runtime/notifier.ico
+PASS: required:manifest.json
+PASS: required:state-engine.js
+PASS: required:reliability-core.js
+PASS: required:service-worker.js
+PASS: required:managed-bootstrap.js
+PASS: required:content.js
+PASS: required:popup.html
+PASS: required:popup.js
+PASS: required:popup.css
+PASS: required:icons/icon16.png
+PASS: required:icons/icon32.png
+PASS: required:icons/icon48.png
+PASS: required:icons/icon128.png
+PASS: required:icons/icon256.png
+PASS: required:icons/icon512.png
+PASS: required:tests/state-engine-v221.test.js
+PASS: required:tests/request-regression-v221.test.js
+PASS: required:tests/reliability-core.test.js
+PASS: required:tests/service-worker-multitab.test.js
+PASS: required:tests/RESOURCE_TEST.ps1
+PASS: required:tests/VERIFY_RUNTIME.ps1
+PASS: required:tests/MANUAL_VALIDATION.md
+PASS: required:RUN_CODEX_FINAL_WINDOWS_VALIDATION.bat
+PASS: required:CODEX_EXECUTE_FIRST.md
+PASS: required:README.md
+PASS: required:CHANGELOG.md
+PASS: required:FINAL_WINDOWS_EXECUTION_REPORT.md
+PASS: required:FINAL_100_LINE_BY_LINE_AUDIT_REPORT.txt
+PASS: required:SECURITY.md
+PASS: required:ARCHITECTURE.md
+PASS: required:tests/final-100-audit.py
+PASS: required:tests/security-hardening-v230.py
+PASS: required:tests/SECURITY_WINDOWS_RUNTIME.ps1
+PASS: required:CODEX_FINALISE_NO_THINKING.md
+PASS: required:AUDIT_100_LAYER_RESULTS.md
+PASS: required:DEFECT_REPAIR_LEDGER.json
+PASS: required:CRITICAL_INVARIANTS.md
+PASS: required:REQUIREMENT_TRACEABILITY.md
+PASS: required:TEST_EVIDENCE_INDEX.md
+PASS: required:FINAL_ENVIRONMENT_MATRIX.md
+PASS: required:SBOM.cdx.json
+PASS: required:BUILD_PROVENANCE.json
+PASS: required:SECURITY_BASELINE.md
+PASS: deleted:companion/chatgpt-app-watcher.ps1
+PASS: deleted:companion/install-companion.ps1
+PASS: deleted:companion/uninstall-companion.ps1
+PASS: deleted:RUN_GPTCHAT_G20_TEST.bat
+PASS: deleted:tests/gptchat-switch-test.ps1
+PASS: manifest-v3
+PASS: version-2.3.0
+PASS: minimum-chrome-120
+PASS: permission:tabs
+PASS: permission:windows
+PASS: permission:storage
+PASS: permission:notifications
+PASS: permission:alarms
+PASS: chatgpt-host-only
+PASS: chrome-only-description
+PASS: no-process-wide-launch-switches
+PASS: launch-no-duplicates
+PASS: prohibited-config:--no-sandbox
+PASS: prohibited-config:--disable-web-security
+PASS: prohibited-config:--ignore-certificate-errors
+PASS: prohibited-config:--allow-running-insecure-content
+PASS: original-user-data-dir
+PASS: managed-profile
+PASS: no-obsolete-load-extension-switch
+PASS: managed-extension-setup
+PASS: safe-arg-dedup
+PASS: paths-quoted
+PASS: chrome-detection
+PASS: awake-winapi
+PASS: display-awake-optional
+PASS: awake-default-on
+PASS: display-default-off
+PASS: auto-recover-default-on
+PASS: auto-repair-default-on
+PASS: stale-recovery-default-on
+PASS: lid-policy-not-changed
+PASS: hide-all-managed-windows
+PASS: show-all-managed-windows
+PASS: hung-detection
+PASS: active-response-restart-suppression
+PASS: staged-recovery
+PASS: correct-tab-popup-route
+PASS: custom-popup
+PASS: popup-bottom-right-and-content-visible
+PASS: ui-assets-do-not-lock-release-files
+PASS: white-blue-dashboard
+PASS: dashboard-row:Windows awake protection
+PASS: dashboard-row:Original Chrome profile
+PASS: dashboard-row:Managed-window isolation
+PASS: dashboard-row:Background tab monitoring
+PASS: dashboard-row:Memory Saver tab protection
+PASS: dashboard-row:Windows power source
+PASS: dashboard-row:Extension heartbeat
+PASS: dashboard-row:Browser bridge
+PASS: dashboard-row:Managed Chrome
+PASS: dashboard-row:Monitored ChatGPT tabs
+PASS: dashboard-row:Last monitoring event
+PASS: dashboard-row:Recovery status
+PASS: tray-control:Open Dashboard
+PASS: tray-control:Show Managed Chrome
+PASS: tray-control:Hide Managed Chrome
+PASS: tray-control:Pause Monitoring
+PASS: tray-control:Resume Monitoring
+PASS: tray-control:Keep Computer Awake
+PASS: tray-control:Restart Managed Chrome
+PASS: tray-control:Repair Connection
+PASS: tray-control:Exit
+PASS: custom-icon-tray
+PASS: no-powershell-icon-fallback-primary
+PASS: 2s-health-loop-not-busy
+PASS: no-profile-copy-helper
+PASS: no-profile-copy-code
+PASS: no-global-chrome-policy-write-profile
+PASS: bridge-loopback-only
+PASS: bridge-v2.3.0
+PASS: bridge-chrome-only
+PASS: bridge-endpoint:/state
+PASS: bridge-endpoint:/config
+PASS: bridge-endpoint:/command
+PASS: bridge-endpoint:/browser-event
+PASS: bridge-endpoint:/browser-heartbeat
+PASS: bridge-endpoint:/browser-lifecycle
+PASS: bridge-endpoint:/browser-tab-closed
+PASS: bridge-endpoint:/show-managed-window
+PASS: bridge-endpoint:/request-tab-focus
+PASS: bridge-endpoint:/request-repair
+PASS: bridge-endpoint:/diagnostic-ping
+PASS: bridge-endpoint:/command-ack
+PASS: bridge-origin-guard
+PASS: bridge-body-limit
+PASS: bridge-status-allowlist
+PASS: bridge-status-metadata-only
+PASS: bridge-no-external-network
+PASS: bridge-no-0.0.0.0
+PASS: bridge-multitab-records
+PASS: core-import
+PASS: managed-registration
+PASS: managed-window-move-boundary
+PASS: per-tab-auto-discardable
+PASS: managed-window-query
+PASS: ordinary-window-isolation
+PASS: managed-window-close-clears-session
+PASS: tab-lifecycle:onUpdated
+PASS: tab-lifecycle:onActivated
+PASS: tab-lifecycle:onDetached
+PASS: tab-lifecycle:onAttached
+PASS: tab-lifecycle:onReplaced
+PASS: tab-lifecycle:onRemoved
+PASS: single-leader-command-channel
+PASS: leader-role-reasserted-after-early-registration
+PASS: alarms-health-1m
+PASS: timeout-only-recovery-request
+PASS: correct-tab-activation
+PASS: notification-dedupe
+PASS: runtime-config-pause
+PASS: no-chatgpt-network-fetch-sw
+PASS: fail-closed-completion-engine
+PASS: stuck-thinking-engine
+PASS: extended-thinking-positive-running
+PASS: active-tool-running-evidence
+PASS: long-pause-engine
+PASS: ordered-progress-parser
+PASS: historical-dom-no-fresh-completion
+PASS: work-completion-fail-closed
+PASS: progress-only-state-propagation
+PASS: popup-latest-activity-sort
+PASS: resume-prefill-no-send
+PASS: persistent-top-page-alert
+PASS: alert-dismissal-episode-stable
+PASS: initial-manual-baseline-emits
+PASS: external-manual-attention-explicit-clear
+PASS: manual-popup-topmost-persistence
+PASS: manual-popup-queue
+PASS: manual-action-service-states
+PASS: manual-notification-require-interaction
+PASS: timeout-refresh-draft-protection
+PASS: timeout-refresh-conversation-scope
+PASS: stale-heartbeat-fail-closed
+PASS: mutation-observer
+PASS: dom-fallback-5s
+PASS: controlled-heartbeat-20s
+PASS: leader-poll-3s-local-only
+PASS: no-forged-visibility
+PASS: chatgpt-only-by-manifest
+PASS: generic-stale-never-autorefresh
+PASS: no-reload-while-generating
+PASS: controlled-reload-cooldown-15m
+PASS: reload-after-live-probe
+PASS: online-offline-events
+PASS: no-fake-input
+PASS: no-chatgpt-network-fetch-content
+PASS: serialized-local-state-mutations
+PASS: serialized-leader-election
+PASS: navigate-away-record-cleanup
+PASS: document-start-token-bootstrap
+PASS: content-token-fallback
+PASS: state-send-retry-before-ack
+PASS: captured-window-process-id
+PASS: restart-closes-window-only
+PASS: bridge-client-timeouts
+PASS: bridge-command-expiry
+PASS: bridge-heartbeat-status-validation
+PASS: bridge-owned-process-stop
+PASS: advanced-logger-v1.1
+PASS: advanced-logger-current-release-integrity
+PASS: advanced-logger-safe-complete-proof
+PASS: advanced-logger-path-fix-preserved
+PASS: popup-v2.3.0
+PASS: popup-white-blue
+PASS: popup-reliability
+PASS: popup-program-alert-primary
+PASS: chrome-only-live:managed-bootstrap.js
+PASS: chrome-only-live:content.js
+PASS: chrome-only-live:service-worker.js
+PASS: chrome-only-live:popup.html
+PASS: chrome-only-live:popup.js
+PASS: chrome-only-live:popup.css
+PASS: chrome-only-live:manifest.json
+PASS: chrome-only-live:reliability-core.js
+PASS: chrome-only-live:runtime/tray-host.ps1
+PASS: chrome-only-live:runtime/browser-bridge.ps1
+PASS: chrome-only-live:runtime/diagnostics.ps1
+PASS: dangerous-not-added-host
+PASS: no-global-policy-registry
+PASS: legacy-install-reference-migration-only
+PASS: legacy-uninstall-reference-migration-only
+PASS: node-parse:state-engine.js
+PASS: node-parse:reliability-core.js
+PASS: node-parse:service-worker.js
+PASS: node-parse:managed-bootstrap.js
+PASS: node-parse:content.js
+PASS: node-parse:popup.js
+PASS: node-parse:tests/state-engine-v221.test.js
+PASS: node-parse:tests/request-regression-v221.test.js
+PASS: node-parse:tests/reliability-core.test.js
+PASS: node-parse:tests/service-worker-multitab.test.js
+PASS: node-parse:tests/diagnostics.js
+PASS: node-parse:tests/browser-fixture.js
+PASS: node-parse:tests/browser-fixture-clock.js
+PASS: node-test:tests/state-engine-v221.test.js - PASS state-engine-v221.test.js
+PASS: node-test:tests/request-regression-v221.test.js - PASS request-regression-v221.test.js
+PASS: node-test:tests/reliability-core.test.js - PASS reliability-core.test.js
+PASS: node-test:tests/service-worker-multitab.test.js - PASS service-worker-multitab.test.js: multi-tab concurrency, ordinary-window isolation, move boundary, navigate-away cleanup, dedupe, routing, stale recovery
+
+STATIC RESULT: 257/257 PASS

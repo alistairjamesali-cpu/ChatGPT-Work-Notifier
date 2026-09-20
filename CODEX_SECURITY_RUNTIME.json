@@ -1,0 +1,47 @@
+{
+    "version":  "2.3.0",
+    "generatedAt":  "2026-09-04T00:49:29.3442850Z",
+    "pass":  true,
+    "checks":  [
+                   {
+                       "name":  "Public state omits tab URL",
+                       "pass":  true,
+                       "detail":  "Unauthenticated local state must not expose ChatGPT URLs."
+                   },
+                   {
+                       "name":  "Public state omits conversationId",
+                       "pass":  true,
+                       "detail":  "Unauthenticated local state must not expose conversation identifiers."
+                   },
+                   {
+                       "name":  "No-origin event rejected",
+                       "pass":  true,
+                       "detail":  "Browser event requires extension origin and token."
+                   },
+                   {
+                       "name":  "Wrong-token event rejected",
+                       "pass":  true,
+                       "detail":  "Wrong session token must fail."
+                   },
+                   {
+                       "name":  "Unauthenticated repair control rejected",
+                       "pass":  true,
+                       "detail":  "Local state-changing control requires the session token."
+                   },
+                   {
+                       "name":  "Wrong-token diagnostic control rejected",
+                       "pass":  true,
+                       "detail":  "Diagnostic command injection with a forged token must fail."
+                   },
+                   {
+                       "name":  "Correct token validates",
+                       "pass":  true,
+                       "detail":  "The active managed-session token must validate."
+                   },
+                   {
+                       "name":  "Wrong token validation rejected",
+                       "pass":  true,
+                       "detail":  "Forged token must not validate."
+                   }
+               ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "release": "2.4.0",
+  "source_input_sha256": "20cc4a6f15a631940c00eaa005b08dac3cd220936cdd73bb807c2e6542c376ef",
+  "source_input_name": "CHATGPT_WORK_NOTIFIER_POST_STAGE1_CODEX_HANDOFF_20260904.zip",
+  "baseline_root_manifest_sha256": "1b28dd3860d4e68e9f629655f3f510e28c5e5a546af6088b23e100d5e75e69f8",
+  "audit_date": "2026-09-04",
+  "analysis_environment": {
+    "os": "Windows",
+    "node": "system Node.js; exact version recorded in V240_IMPLEMENTATION_EVIDENCE.md",
+    "python": "system Python 3; exact version recorded in V240_IMPLEMENTATION_EVIDENCE.md",
+    "powershell": "Windows PowerShell 5.1 parser and runtime-contract tests"
+  },
+  "build": "source/script release; no compiled application build and no replacement ZIP requested",
+  "final_artifact": "authoritative in-place CURRENT_NOTIFIER/Notifier root"
+}

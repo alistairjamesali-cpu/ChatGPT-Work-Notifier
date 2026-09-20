@@ -1,0 +1,104 @@
+FINAL 100 MATERIAL AUDIT — 100/100 PASS
+Line-by-line text scope: 7831 lines across 68 text/code files.
+PASS A01 single release implementation root
+PASS A02 no nested duplicate release root
+PASS A03 no Python cache artifacts
+PASS A04 all text files UTF-8 decodable
+PASS A05 no UTF-8 BOM in shipped source text
+PASS A06 no NUL bytes in shipped text
+PASS A07 no trailing whitespace line-by-line
+PASS A08 no unresolved TODO/FIXME/HACK markers
+PASS A09 manifest JSON parses
+PASS A10 chrome-launch JSON parses
+PASS A11 Manifest V3 only
+PASS A12 release version is 2.3.0
+PASS A13 minimum Chrome version declared
+PASS A14 permissions limited to required notifier APIs
+PASS A15 host permissions limited to ChatGPT and loopback
+PASS A16 managed token bootstrap runs at document_start
+PASS A17 hardened state engine and main detector remain document_idle
+PASS A18 bootstrap validates 32-hex managed token
+PASS A19 bootstrap stores token only in tab sessionStorage
+PASS A20 content has query-or-session token fallback
+PASS A21 MutationObserver drives DOM detection
+PASS A22 low-frequency DOM fallback is five seconds
+PASS A23 extension heartbeat cadence is 20 seconds
+PASS A24 command polling cadence is 3 seconds
+PASS A25 no fake mouse input
+PASS A26 no fake keyboard input
+PASS A27 visibility state is observed not forged
+PASS A28 content never fetches ChatGPT network endpoints
+PASS A29 timeout recovery is globally rate-limited to 15 minutes and four per six hours
+PASS A30 timeout refresh is blocked for active/resumable generation and composer drafts
+PASS A31 timeout reload rechecks live page state immediately before cached reload
+PASS A32 pending timeout recovery is tab/message/conversation scoped
+PASS A33 online/offline browser events are handled
+PASS A34 state delivery retries before marking sent
+PASS A35 terminal states plus extended-thinking/tool RUNNING evidence are classified
+PASS A36 reliability core imported in service worker
+PASS A37 shared local state mutations are serialized
+PASS A38 tab record updates use serialized mutation
+PASS A39 tab record removals use serialized mutation
+PASS A40 event+tab writes are atomic in one serialized mutation
+PASS A41 command leader election is serialized and reasserted after early registration
+PASS A42 managed registration is session-token based
+PASS A43 sender validation is restricted to the captured managed window
+PASS A44 ordinary Chrome windows are explicitly ignored
+PASS A45 every managed ChatGPT tab is non-discardable
+PASS A46 scans are restricted to the captured managed window
+PASS A47 navigate-away lifecycle is recorded
+PASS A48 navigate-away tab record is removed
+PASS A49 tab detach lifecycle is handled
+PASS A50 tab reattach lifecycle is handled
+PASS A51 renderer/tab replacement is handled
+PASS A52 closed tabs are removed from bridge and local state
+PASS A53 captured window closure clears the managed session
+PASS A54 one-minute health alarm rescans protection
+PASS A55 duplicate notifications have persistent and volatile gates
+PASS A56 bridge binds IPAddress.Loopback
+PASS A57 bridge origin guard restricts Chrome extension origins
+PASS A58 bridge request body capped at 16 KiB
+PASS A59 accepted socket receive timeout is two seconds
+PASS A60 accepted socket send timeout is two seconds
+PASS A61 bridge status events use allowlist
+PASS A62 heartbeat states use separate allowlist
+PASS A63 bridge accepts status metadata not prompt/response text
+PASS A64 bridge contains no external HTTP client calls
+PASS A65 stale pending commands expire after 30 seconds
+PASS A66 command acknowledgements clear pending command
+PASS A67 bridge tab records expose heartbeat age
+PASS A68 bridge removes closed/detached tab record
+PASS A69 bridge mode is CHROME_ONLY
+PASS A70 bridge version is 2.3.0
+PASS A71 Windows awake protection uses SetThreadExecutionState
+PASS A72 awake protection clears on pause/exit
+PASS A73 display-awake remains optional and default off
+PASS A74 lid-close policy is explicitly not modified
+PASS A75 managed Chrome uses the original Chrome user-data directory
+PASS A76 managed Chrome retains selected original profile name
+PASS A77 no process-wide background switches are configured
+PASS A78 dangerous Chrome switches are prohibited
+PASS A79 required launch switches are de-duplicated
+PASS A80 no profile-copy helper is shipped
+PASS A81 runtime state declares original-profile use
+PASS A82 newly opened Chrome window is captured by HWND difference
+PASS A83 per-tab Memory Saver protection remains enabled
+PASS A84 restart closes only the captured HWND
+PASS A85 extension setup uses the same profile without user-data override
+PASS A86 hide-to-tray hides only the captured Chrome window
+PASS A87 show restores only the captured Chrome window
+PASS A88 hung Chrome detection exists
+PASS A89 automatic restart is suppressed during RUNNING work
+PASS A90 staged recovery exposes HEALTHY/DEGRADED/REPAIRING/RECOVERED
+PASS A91 correct-tab popup routing uses target tab id
+PASS A92 tray/bridge process stop prefers notifier-owned PID/path
+PASS A93 UI is professional and image resources are release-safe
+PASS A94 install preserves existing user settings on upgrade
+PASS A95 uninstall closes only the captured HWND and preserves ordinary Chrome
+PASS A96 state-engine/request-regression/reliability-core tests pass — PASS state-engine-v221.test.js
+PASS request-regression-v221.test.js
+PASS reliability-core.test.js
+PASS A97 concurrent/multi-tab regression test passes — PASS service-worker-multitab.test.js: multi-tab concurrency, ordinary-window isolation, move boundary, navigate-away cleanup, dedupe, routing, stale recovery
+PASS A98 expanded static audit passes — STATIC RESULT: 257/257 PASS
+PASS A99 Windows runtime verifier includes parser and original-profile gates
+PASS A100 Codex handoff mandates repair-until-pass and single-root final packaging

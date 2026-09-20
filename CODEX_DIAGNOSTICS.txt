@@ -1,0 +1,18 @@
+PASS  Chrome detected - C:\Program Files\Google\Chrome\Application\chrome.exe
+PASS  Managed Chrome window process detected - PID 32320
+PASS  Original Chrome profile active - Using the existing Chrome profile Default.
+PASS  Dangerous Chrome switches absent - No prohibited sandbox, web-security, or certificate bypass switch detected.
+PASS  Browser bridge listening - Version 2.3.0, mode CHROME_ONLY
+PASS  Browser bridge localhost-only - Listener is restricted to loopback.
+PASS  ChatGPT tab detection working - 1 monitored ChatGPT tab(s).
+PASS  Extension heartbeat working - Last heartbeat 9.7s ago.
+PASS  Memory Saver tab protection - Every tracked ChatGPT tab reports autoDiscardable=false.
+PASS  Background event delivery working - Controlled extension heartbeat reaches the local bridge.
+WARN  Notification popup pipeline - Authenticated popup test event accepted. Visual popup appearance requires user confirmation.
+PASS  Notification routing command channel - Extension acknowledged the local command channel.
+PASS  Original profile preserved - No copied or isolated Chrome user-data directory is used.
+PASS  Awake protection active - SetThreadExecutionState protection is active.
+PASS  Recovery mechanism configured - Recovery state: HEALTHY
+PASS  Hidden-window state known - Managed Chrome is currently visible or not hidden.
+
+Summary: 15 PASS, 1 WARN, 0 FAIL
